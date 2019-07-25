@@ -17,7 +17,7 @@ import (
 	"sync"
 
 	"icenter/src/common/backbone"
-	cc "icenter/src/common/backbone/icenter"
+	cc "icenter/src/common/backbone/configcenter"
 	"icenter/src/common/storage/dal/mongo"
 	"icenter/src/common/storage/dal/redis"
 	"icenter/src/common/storage/tmserver/app/options"

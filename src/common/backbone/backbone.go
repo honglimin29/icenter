@@ -23,7 +23,7 @@ import (
 	"icenter/src/apimachinery/discovery"
 	"icenter/src/apimachinery/util"
 	"icenter/src/common"
-	cc "icenter/src/common/backbone/icenter"
+	cc "icenter/src/common/backbone/configcenter"
 	"icenter/src/common/backbone/service_mange/zk"
 	"icenter/src/common/blog"
 	"icenter/src/common/errors"

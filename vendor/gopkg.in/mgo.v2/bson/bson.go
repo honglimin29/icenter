@@ -50,7 +50,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"configcenter/src/common/blog"
+	"icenter/src/common/blog"
 )
 
 // --------------------------------------------------------------------------

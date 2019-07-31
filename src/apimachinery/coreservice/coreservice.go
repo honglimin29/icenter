@@ -16,14 +16,24 @@ import (
 	"fmt"
 
 	"icenter/src/apimachinery/coreservice/association"
+	"icenter/src/apimachinery/coreservice/auditlog"
+	"icenter/src/apimachinery/coreservice/host"
+	"icenter/src/apimachinery/coreservice/instance"
+	"icenter/src/apimachinery/coreservice/mainline"
 	"icenter/src/apimachinery/coreservice/model"
+	"icenter/src/apimachinery/coreservice/synchronize"
 	"icenter/src/apimachinery/rest"
 	"icenter/src/apimachinery/util"
 )
 
 type CoreServiceClientInterface interface {
+	Instance() instance.InstanceClientInterface
 	Model() model.ModelClientInterface
 	Association() association.AssociationClientInterface
+	Synchronize() synchronize.SynchronizeClientInterface
+	Mainline() mainline.MainlineClientInterface
+	Host() host.HostClientInterface
+	Audit() auditlog.AuditClientInterface
 }
 
 func NewCoreServiceClient(c *util.Capability, version string) CoreServiceClientInterface {
@@ -37,10 +47,30 @@ type coreService struct {
 	restCli rest.ClientInterface
 }
 
+func (c *coreService) Instance() instance.InstanceClientInterface {
+	return instance.NewInstanceClientInterface(c.restCli)
+}
+
 func (c *coreService) Model() model.ModelClientInterface {
 	return model.NewModelClientInterface(c.restCli)
 }
 
 func (c *coreService) Association() association.AssociationClientInterface {
 	return association.NewAssociationClientInterface(c.restCli)
+}
+
+func (c *coreService) Mainline() mainline.MainlineClientInterface {
+	return mainline.NewMainlineClientInterface(c.restCli)
+}
+
+func (c *coreService) Synchronize() synchronize.SynchronizeClientInterface {
+	return synchronize.NewSynchronizeClientInterface(c.restCli)
+}
+
+func (c *coreService) Host() host.HostClientInterface {
+	return host.NewHostClientInterface(c.restCli)
+}
+
+func (c *coreService) Audit() auditlog.AuditClientInterface {
+	return auditlog.NewAuditClientInterface(c.restCli)
 }

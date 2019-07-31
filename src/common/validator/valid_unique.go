@@ -15,11 +15,11 @@ package validator
 import (
 	"strings"
 
-	"configcenter/src/common"
-	"configcenter/src/common/blog"
-	"configcenter/src/common/condition"
-	"configcenter/src/common/metadata"
-	"configcenter/src/common/util"
+	"icenter/src/common"
+	"icenter/src/common/blog"
+	"icenter/src/common/condition"
+	"icenter/src/common/metadata"
+	"icenter/src/common/util"
 )
 
 // validCreateUnique  valid create unique

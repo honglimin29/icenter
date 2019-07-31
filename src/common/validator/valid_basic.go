@@ -17,11 +17,11 @@ import (
 	"regexp"
 	"strconv"
 
-	"configcenter/src/common"
-	"configcenter/src/common/backbone"
-	"configcenter/src/common/blog"
-	"configcenter/src/common/metadata"
-	"configcenter/src/common/util"
+	"icenter/src/common"
+	"icenter/src/common/backbone"
+	"icenter/src/common/blog"
+	"icenter/src/common/metadata"
+	"icenter/src/common/util"
 )
 
 // NewValidMap returns new NewValidMap

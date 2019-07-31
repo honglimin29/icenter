@@ -16,9 +16,9 @@ import (
 	"context"
 	"net/http"
 
-	"configcenter/src/common/backbone"
-	"configcenter/src/common/errors"
-	"configcenter/src/common/metadata"
+	"icenter/src/common/backbone"
+	"icenter/src/common/errors"
+	"icenter/src/common/metadata"
 )
 
 // MinMaxOption option for number

@@ -18,9 +18,9 @@ import (
 	"github.com/tidwall/gjson"
 	"gopkg.in/mgo.v2/bson"
 
-	"configcenter/src/common"
-	"configcenter/src/common/blog"
-	"configcenter/src/common/metadata"
+	"icenter/src/common"
+	"icenter/src/common/blog"
+	"icenter/src/common/metadata"
 )
 
 func getString(val interface{}) string {

@@ -17,11 +17,14 @@ import (
 	"icenter/src/apimachinery/discovery"
 	"icenter/src/apimachinery/flowctrl"
 	"icenter/src/apimachinery/healthz"
+	"icenter/src/apimachinery/objcontroller"
 	"icenter/src/apimachinery/util"
 )
 
 type ClientSetInterface interface {
+	ObjectController() objcontroller.ObjControllerClientInterface
 	CoreService() coreservice.CoreServiceClientInterface
+
 	Healthz() healthz.HealthzInterface
 }
 
@@ -78,4 +81,14 @@ func (cs *ClientSet) CoreService() coreservice.CoreServiceClientInterface {
 		Mock:     cs.Mock,
 	}
 	return coreservice.NewCoreServiceClient(c, cs.version)
+}
+
+func (cs *ClientSet) ObjectController() objcontroller.ObjControllerClientInterface {
+	c := &util.Capability{
+		Client:   cs.client,
+		Discover: cs.discover.ObjectCtrl(),
+		Throttle: cs.throttle,
+		Mock:     cs.Mock,
+	}
+	return objcontroller.NewObjectControllerInterface(c, cs.version)
 }

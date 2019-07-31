@@ -15,6 +15,7 @@ package coreservice
 import (
 	"fmt"
 
+	"icenter/src/apimachinery/coreservice/association"
 	"icenter/src/apimachinery/coreservice/model"
 	"icenter/src/apimachinery/rest"
 	"icenter/src/apimachinery/util"
@@ -22,6 +23,7 @@ import (
 
 type CoreServiceClientInterface interface {
 	Model() model.ModelClientInterface
+	Association() association.AssociationClientInterface
 }
 
 func NewCoreServiceClient(c *util.Capability, version string) CoreServiceClientInterface {
@@ -37,4 +39,8 @@ type coreService struct {
 
 func (c *coreService) Model() model.ModelClientInterface {
 	return model.NewModelClientInterface(c.restCli)
+}
+
+func (c *coreService) Association() association.AssociationClientInterface {
+	return association.NewAssociationClientInterface(c.restCli)
 }

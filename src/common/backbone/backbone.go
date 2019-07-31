@@ -137,7 +137,7 @@ func NewBackbone(ctx context.Context, input *BackboneParameter) (*Engine, error)
 		OnErrorUpdate:    engine.onErrorUpdate,
 	}
 
-	err = cc.Newicenter(ctx, client, common.GetIdentification(), input.ConfigPath, handler)
+	err = cc.NewConfigCenter(ctx, client, common.GetIdentification(), input.ConfigPath, handler)
 	if err != nil {
 		return nil, fmt.Errorf("new config center failed, err: %v", err)
 	}

@@ -27,7 +27,7 @@ func TestTransaction(t *testing.T) {
 
 	startCoreService(t, "127.0.0.1", 8899)
 
-	dbDal, err := remote.New("127.0.0.1:8899")
+	dbDal, err := remote.New("127.0.0.1:8899", true)
 	require.NoError(t, err)
 	require.NotNil(t, dbDal)
 	doc := mapstr.MapStr{

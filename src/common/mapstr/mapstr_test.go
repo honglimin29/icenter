@@ -85,7 +85,7 @@ func TestMapStrInto(t *testing.T) {
 
 	tmp := &testData{}
 	target.MarshalJSONInto(tmp)
-	//t.Logf("the test tmp %#v", tmp)
+	t.Logf("the test tmp %#v", tmp)
 
 	maps := mapstr.NewArrayFromInterface([]map[string]interface{}{
 		{"k": "value"}, {"i": 0},

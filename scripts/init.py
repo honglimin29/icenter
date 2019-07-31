@@ -11,7 +11,7 @@ from string import Template
 class FileTemplate(Template):
     delimiter = '$'
 
-
+#生成各服务配置文件
 def generate_config_file(
         rd_server_v, db_name_v, redis_ip_v, redis_port_v, redis_user_v,
         redis_pass_v, mongo_ip_v, mongo_port_v, mongo_user_v, mongo_pass_v,
@@ -439,7 +439,7 @@ agent_app_url = ${agent_url}/console/?app=bk_agent_setup
     with open(output + "webserver.conf", 'w') as tmp_file:
         tmp_file.write(result)
 
-
+#更新各服务中的启动脚本
 def update_start_script(rd_server, server_ports):
     list_dirs = os.walk(os.getcwd()+"/")
     for root, dirs, _ in list_dirs:

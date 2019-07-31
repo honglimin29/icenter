@@ -10,7 +10,7 @@
  * limitations under the License.
  */
 
-package icenter
+package configcenter
 
 import (
 	"context"
@@ -30,7 +30,7 @@ import (
 
 var confC *CC
 
-func Newicenter(ctx context.Context, client *zk.ZkClient, procName string, confPath string, handler *CCHandler) error {
+func NewConfigCenter(ctx context.Context, client *zk.ZkClient, procName string, confPath string, handler *CCHandler) error {
 	disc := crd.NewZkRegDiscover(client)
 	return New(ctx, procName, confPath, disc, handler)
 }

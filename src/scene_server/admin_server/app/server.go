@@ -42,7 +42,7 @@ func Run(ctx context.Context, op *options.ServerOption) error {
 	}
 
 	process := new(MigrateServer)
-	pconfig, err := icenter.ParseConfigWithFile(op.ServConf.ExConfig)
+	pconfig, err := configcenter.ParseConfigWithFile(op.ServConf.ExConfig)
 	if nil != err {
 		return fmt.Errorf("parse config file error %s", err.Error())
 	}

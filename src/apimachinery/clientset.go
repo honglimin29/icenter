@@ -13,16 +13,33 @@
 package apimachinery
 
 import (
+	"icenter/src/apimachinery/adminserver"
+	"icenter/src/apimachinery/apiserver"
 	"icenter/src/apimachinery/coreservice"
 	"icenter/src/apimachinery/discovery"
+	"icenter/src/apimachinery/eventserver"
 	"icenter/src/apimachinery/flowctrl"
 	"icenter/src/apimachinery/healthz"
+	"icenter/src/apimachinery/hostcontroller"
+	"icenter/src/apimachinery/hostserver"
 	"icenter/src/apimachinery/objcontroller"
+	"icenter/src/apimachinery/proccontroller"
+	"icenter/src/apimachinery/procserver"
+	"icenter/src/apimachinery/toposerver"
 	"icenter/src/apimachinery/util"
 )
 
 type ClientSetInterface interface {
+	HostServer() hostserver.HostServerClientInterface
+	TopoServer() toposerver.TopoServerClientInterface
+	ProcServer() procserver.ProcServerClientInterface
+	AdminServer() adminserver.AdminServerClientInterface
+	ApiServer() apiserver.ApiServerClientInterface
+	EventServer() eventserver.EventServerClientInterface
+
 	ObjectController() objcontroller.ObjControllerClientInterface
+	ProcController() proccontroller.ProcCtrlClientInterface
+	HostController() hostcontroller.HostCtrlClientInterface
 	CoreService() coreservice.CoreServiceClientInterface
 
 	Healthz() healthz.HealthzInterface
@@ -65,6 +82,100 @@ type ClientSet struct {
 	Mock     util.MockInfo
 }
 
+func (cs *ClientSet) HostServer() hostserver.HostServerClientInterface {
+	c := &util.Capability{
+		Client:   cs.client,
+		Discover: cs.discover.HostServer(),
+		Throttle: cs.throttle,
+		Mock:     cs.Mock,
+	}
+	cs.Mock.SetMockData = false
+	return hostserver.NewHostServerClientInterface(c, cs.version)
+}
+
+func (cs *ClientSet) TopoServer() toposerver.TopoServerClientInterface {
+	c := &util.Capability{
+		Client:   cs.client,
+		Discover: cs.discover.TopoServer(),
+		Throttle: cs.throttle,
+		Mock:     cs.Mock,
+	}
+	cs.Mock.SetMockData = false
+	return toposerver.NewTopoServerClient(c, cs.version)
+}
+
+func (cs *ClientSet) ObjectController() objcontroller.ObjControllerClientInterface {
+	c := &util.Capability{
+		Client:   cs.client,
+		Discover: cs.discover.ObjectCtrl(),
+		Throttle: cs.throttle,
+		Mock:     cs.Mock,
+	}
+	return objcontroller.NewObjectControllerInterface(c, cs.version)
+}
+
+func (cs *ClientSet) ProcServer() procserver.ProcServerClientInterface {
+	c := &util.Capability{
+		Client:   cs.client,
+		Discover: cs.discover.ProcServer(),
+		Throttle: cs.throttle,
+	}
+	cs.Mock.SetMockData = false
+	return procserver.NewProcServerClientInterface(c, cs.version)
+}
+
+func (cs *ClientSet) AdminServer() adminserver.AdminServerClientInterface {
+	c := &util.Capability{
+		Client:   cs.client,
+		Discover: cs.discover.MigrateServer(),
+		Throttle: cs.throttle,
+		Mock:     cs.Mock,
+	}
+	cs.Mock.SetMockData = false
+	return adminserver.NewAdminServerClientInterface(c, cs.version)
+}
+
+func (cs *ClientSet) ApiServer() apiserver.ApiServerClientInterface {
+	c := &util.Capability{
+		Client:   cs.client,
+		Discover: cs.discover.ApiServer(),
+		Throttle: cs.throttle,
+	}
+	return apiserver.NewApiServerClientInterface(c, cs.version)
+}
+
+func (cs *ClientSet) EventServer() eventserver.EventServerClientInterface {
+	c := &util.Capability{
+		Client:   cs.client,
+		Discover: cs.discover.EventServer(),
+		Throttle: cs.throttle,
+		Mock:     cs.Mock,
+	}
+	cs.Mock.SetMockData = false
+	return eventserver.NewEventServerClientInterface(c, cs.version)
+}
+
+func (cs *ClientSet) ProcController() proccontroller.ProcCtrlClientInterface {
+	c := &util.Capability{
+		Client:   cs.client,
+		Discover: cs.discover.ProcCtrl(),
+		Throttle: cs.throttle,
+		Mock:     cs.Mock,
+	}
+	cs.Mock.SetMockData = false
+	return proccontroller.NewProcCtrlClientInterface(c, cs.version)
+}
+
+func (cs *ClientSet) HostController() hostcontroller.HostCtrlClientInterface {
+	c := &util.Capability{
+		Client:   cs.client,
+		Discover: cs.discover.HostCtrl(),
+		Throttle: cs.throttle,
+		Mock:     cs.Mock,
+	}
+	return hostcontroller.NewHostCtrlClientInterface(c, cs.version)
+}
+
 func (cs *ClientSet) Healthz() healthz.HealthzInterface {
 	c := &util.Capability{
 		Client:   cs.client,
@@ -81,14 +192,4 @@ func (cs *ClientSet) CoreService() coreservice.CoreServiceClientInterface {
 		Mock:     cs.Mock,
 	}
 	return coreservice.NewCoreServiceClient(c, cs.version)
-}
-
-func (cs *ClientSet) ObjectController() objcontroller.ObjControllerClientInterface {
-	c := &util.Capability{
-		Client:   cs.client,
-		Discover: cs.discover.ObjectCtrl(),
-		Throttle: cs.throttle,
-		Mock:     cs.Mock,
-	}
-	return objcontroller.NewObjectControllerInterface(c, cs.version)
 }
